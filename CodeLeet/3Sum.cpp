@@ -1,10 +1,19 @@
-/*Palindrome Partitioning II
-Given a string s, partition s such that every substring of the partition is a palindrome.
+/*3SumJan 18 '123993 / 15001
+Given an array S of n integers, are there elements a, b, c in S such that a + b + c = 0? Find all unique triplets in the array which gives the sum of zero.
 
-Return the minimum cuts needed for a palindrome partitioning of s.
+Note:
 
-For example, given s = "aab",
-Return 1 since the palindrome partitioning ["aa","b"] could be produced using 1 cut.
+Elements in a triplet (a,b,c) must be in non-descending order. (ie, a ? b ? c)
+The solution set must not contain duplicate triplets.
+    For example, given array S = {-1 0 1 2 -1 -4},
+
+    A solution set is:
+    (-1, 0, 1)
+    (-1, -1, 2)
+	
+Author: Wencan Luo
+Language: C++
+Date: 08/29/2012	
 */
 	
 #include <iostream>

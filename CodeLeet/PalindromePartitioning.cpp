@@ -1,3 +1,29 @@
+/*Palindrome Partitioning II
+Given a string s, partition s such that every substring of the partition is a palindrome.
+
+Return the minimum cuts needed for a palindrome partitioning of s.
+
+For example, given s = "aab",
+Return 1 since the palindrome partitioning ["aa","b"] could be produced using 1 cut
+	
+Palindrome Partitioning
+Given a string s, partition s such that every substring of the partition is a palindrome.
+
+Return all possible palindrome partitioning of s.
+
+For example, given s = "aab",
+Return
+
+  [
+    ["aa","b"],
+    ["a","a","b"]
+  ]
+
+Author: Wencan Luo
+Language: C++
+Date: 06/04/2013
+*/
+
 #include<iostream>
 using namespace std;
 

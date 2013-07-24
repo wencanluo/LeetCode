@@ -79,7 +79,7 @@ public:
         ListNode *p, *q, *r;
         p = NULL;
         q = head;
-        r = p->next;
+        r = q->next;
         
         bool flag = false;
         
@@ -92,21 +92,35 @@ public:
                 flag = true;
             }else{
                 if(flag){//delete q
-                    if(p == head){
-                        p = p->next;
-                        delete(p);
-                        
-                        
+                    if(NULL == p){//head
+                        delete(q);
+                        q = r;
+						r = r->next;
+						head = q;
                     }else{
-                        
+						p->next = r;
+                        delete(q);
+						q = r;
+						r = r->next;
                     }
-                }
-                
-                p = q;
-                q = q->next;
-                flag = false;
+					flag = false;
+                }else{
+					p = q;
+					q = r;
+					r = r->next;
+				}
             }
         }
+
+		if(flag){//delete the last one
+			if(NULL == p){//head
+                delete(q);
+				head = r;
+            }else{
+				p->next = r;
+                delete(q);
+            }
+		}
         
         return head;
     }
@@ -115,5 +129,23 @@ public:
 int main(){
 	Solution s;
     
+	ListNode *a = new ListNode(2);
+	ListNode *b = new ListNode(2);
+	ListNode *c = new ListNode(2);
+	ListNode *d = new ListNode(2);
+	
+	a->next = b;
+	b->next = c;
+	c->next = d;
+
+	ListNode *p = s.deleteDuplicates(a);
+
+	while(p!=NULL){
+		cout << p->val << ",";
+		p = p->next;
+	}
+	cout << endl;
+
+	system("pause");
     return 0;	
 }

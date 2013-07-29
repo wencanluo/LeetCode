@@ -42,7 +42,37 @@ public:
 	void sortColors(int A[], int n) {
         // Start typing your C/C++ solution below
         // DO NOT write int main() function
-        
+		if(n<=1) return;
+        int i,j,k;
+
+		i=0,j=n-1;
+
+		while(A[i] == 0)i++;
+		while(A[j] == 2)j--;
+
+		for(k=i;k<=j;k++){
+			if(A[k] < 1){//swap A[k], A[i]
+				int t=A[i];
+				A[i] = A[k];
+				A[k] = t;
+				
+				i++;
+			}else if(A[k] > 1){
+				int t=A[j];
+
+				if(t!=0){
+					A[j] = A[k];
+					A[k] = t;
+				}else{
+					A[j] = A[k];
+					A[k] = A[i];
+					A[i] = t;
+					i++;
+				}
+				j--;
+				while(A[j] == 2  && i <= j)j--;
+			}
+		}
     }
 
     void sortColors_2pass(int A[], int n) {
@@ -76,7 +106,10 @@ public:
 void main(){
 	Solution s;
 	
-	int a[] = {1,2,1,0,2};
+	//int a[] = {0,2,2,2,0,2,1,1};
+	int a[] = {1,2,0};
+	//int a[] = {2,2,1};
+	//int a[] = {2,0};
 
 	s.sortColors(a, sizeof(a)/sizeof(a[0]));
 

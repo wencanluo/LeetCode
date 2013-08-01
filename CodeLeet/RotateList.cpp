@@ -39,7 +39,7 @@ struct ListNode {
     ListNode *next;
     ListNode(int x) : val(x), next(NULL) {}
 };
- 
+
 class Solution {
 public:
     ListNode *rotateRight(ListNode *head, int k) {

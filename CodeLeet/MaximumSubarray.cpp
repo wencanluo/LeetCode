@@ -1,14 +1,8 @@
-/*Jump GameMar 25 '125618 / 13186
-Given an array of non-negative integers, you are initially positioned at the first index of the array.
+/*Maximum Subarray Mar 21 '124484 / 9520
+Find the contiguous subarray within an array (containing at least one number) which has the largest sum.
 
-Each element in the array represents your maximum jump length at that position.
-
-Determine if you are able to reach the last index.
-
-For example:
-A = [2,3,1,1,4], return true.
-
-A = [3,2,1,0,4], return false.
+For example, given the array [−2,1,−3,4,−1,2,1,−5,4],
+the contiguous subarray [4,−1,2,1] has the largest sum = 6.
 
 Author: Wencan Luo
 Language: C++
@@ -22,7 +16,6 @@ using namespace std;
 #include<vector>
 #include<string>
 #include<algorithm>
-
 #include<map>
 //#include<unordered_set>
 
@@ -54,20 +47,33 @@ struct Interval {
 
 class Solution {
 public:
-    bool canJump(int A[], int n) {
+    int maxSubArray(int A[], int n) {
         // Start typing your C/C++ solution below
         // DO NOT write int main() function
-        if(n==0) return true;
+        if(n<=0) return 0;
         
-        int maxK = 0;
-        for(int i=0;i<n && i <= maxK;i++){
-            if(maxK < A[i] + i){
-                maxK = A[i] + i;
-            }
+        //first the first positive one
+        int minV = A[0];
+        
+        int k=0;
+        while(k<n){
+            if(A[k] > 0) break;
+            if(A[k] < minV) minV = A[k];
+            k++;
         }
         
-        if(maxK >= n-1) return true;       
-        return false;
+        if(k>=n){
+            return minV;//return the minimal one
+        }
+        
+        minV = A[k];
+        int sum = minV;
+        while(k<n){
+            sum += A[k];
+            if(sum > minV){
+                
+            }
+        }
     }
 };
 

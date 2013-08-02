@@ -1,6 +1,26 @@
-/*N-Queens IIMar 20 '123565 / 8055
-Follow up for N-Queens problem.
-Now, instead outputting board configurations, return the total number of distinct solutions.
+/*N-QueensMar 20 '122965 / 9262
+The n-queens puzzle is the problem of placing n queens on an n*n chessboard such that no two queens attack each other.
+
+
+
+Given an integer n, return all distinct solutions to the n-queens puzzle.
+
+Each solution contains a distinct board configuration of the n-queens' placement, where 'Q' and '.' both indicate a queen and an empty space respectively.
+
+For example,
+There exist two distinct solutions to the 4-queens puzzle:
+
+[
+ [".Q..",  // Solution 1
+  "...Q",
+  "Q...",
+  "..Q."],
+
+ ["..Q.",  // Solution 2
+  "Q...",
+  "...Q",
+  ".Q.."]
+]
 
 Author: Wencan Luo
 Language: C++
@@ -51,6 +71,21 @@ public:
         A[j] = t;
     }
     
+    vector<string> getMap(vector<int> &A){
+        vector<string> M;
+        int n = A.size();
+        string s = "";
+        s.resize(n, '.');
+        
+        for(int i=0;i<n;i++){
+            string t = s;
+            t[A[i]] = 'Q';
+            M.push_back(t);
+        }
+        
+        return M;
+    }
+    
     bool Check(vector<int> &A, int k){
         if(k<=0) return true;
         
@@ -63,12 +98,12 @@ public:
         return true;
     }
     
-    void Permutation(vector<int> &A, int k, int &R){
+    void Permutation(vector<int> &A, int k, vector<vector<string> > &R){
         int n=A.size();
         
         if(k==n-1){
             if(Check(A, k)){
-               R++;
+                R.push_back(getMap(A));
             }
             return;
         }
@@ -84,11 +119,14 @@ public:
         }
     }
     
-    int totalNQueens(int n) {
+    vector<vector<string> > solveNQueens(int n) {
         // Start typing your C/C++ solution below
         // DO NOT write int main() function
-        int R = 0;
+        vector<vector<string> > R;
         if(n==0) {
+            vector<string> t;
+            t.push_back("");
+            R.push_back(t);
             return R;
         }
         
@@ -100,7 +138,7 @@ public:
         }
         
         //generate all the permutations
-		Permutation(A, 0, R);
+    	Permutation(A, 0, R);
 
         return R;
     }
@@ -109,8 +147,16 @@ public:
 void main(){
 	Solution s;
 
-    int R = s.totalNQueens(8);
-	cout << R << endl;
+    vector<vector<string> > R = s.solveNQueens(8);
+	cout << R.size() << endl;
 
+    /*for(int i=0;i<R.size();i++){
+        vector<string> M = R[i];
+        for(int j=0;j<M.size();j++){
+            cout << M[j] << endl;
+        }
+        cout << endl;
+    }*/
+ 
 	system("pause");
 }

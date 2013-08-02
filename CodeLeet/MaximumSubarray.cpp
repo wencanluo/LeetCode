@@ -52,28 +52,36 @@ public:
         // DO NOT write int main() function
         if(n<=0) return 0;
         
-        //first the first positive one
-        int minV = A[0];
+        //find the first positive one
+        int maxV = A[0];
         
         int k=0;
         while(k<n){
             if(A[k] > 0) break;
-            if(A[k] < minV) minV = A[k];
+            if(A[k] > maxV) maxV = A[k];
             k++;
         }
         
-        if(k>=n){
-            return minV;//return the minimal one
+        if(k>=n){//no positive one, return the max one
+            return maxV;
         }
         
-        minV = A[k];
-        int sum = minV;
+        maxV = A[k];
+        int sum = maxV;
+        k++;
+        
         while(k<n){
             sum += A[k];
-            if(sum > minV){
-                
+            if(sum > maxV){
+                maxV = sum;
             }
+            
+            if(sum < 0){
+                sum = 0;
+            }
+            k++;
         }
+        return maxV;
     }
 };
 

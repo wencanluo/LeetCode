@@ -106,6 +106,71 @@ public:
     }
     
 	bool isMatch(const char *s, const char *p) {//O(m+n)
+        int m = strlen(s);
+        int n = strlen(p);
+        
+        bool sHasStar = false;
+        int sCount = 0;
+        for(int i=0;i<m;i++){
+            if(s[i] == '*') {
+                sHasStar = true;
+            }else{
+                sCount++;
+            }
+        }
+        
+        bool pHasStar = false;
+        int pCount = 0;
+        for(int i=0;i<n;i++){
+            if(p[i] == '*') {
+                pHasStar = true;
+            }else{
+                pCount++;
+            }
+        }
+        
+        if(sHasStar && !pHasStar){
+            if(sCount > pCount) return false;
+        }
+        
+        if(!sHasStar && pHasStar){
+            if(sCount < pCount) return false;
+        }
+        
+        vector<bool>  A;
+		vector<bool>  B;
+		vector<bool>  C;
+		A.resize(n+1, false);
+		B.resize(n+1, false);
+		C.resize(m+1, false);
+
+		A[0] = true;
+		for(int j=0;j<n;j++){
+			if(p[j] != '*') break;
+			A[j+1] = true;
+        }
+
+        for(int i=0;i<m;i++){
+            if(s[i] != '*') break;
+			C[i+1] = true;
+        }
+   
+		for(int i=0;i<m;i++){
+			B[0] = C[i];
+
+			for(int j=0;j<n;j++){
+				B[j+1] = false;
+				
+				if(p[j] == '*'){
+					B[j+1] = A[j] || B[j] || A[j+1];
+				}else if(p[j] == '?' || s[i] == p[j]){
+					B[j+1] = A[j];
+				}
+			}
+			A = B;
+		}
+        
+        return A[n];
 	}
 
     bool isMatch_Omn(const char *s, const char *p) {//O(m*n) Time, O(n) Space
@@ -149,6 +214,7 @@ public:
 					}else if(s[i] == '?' || p[j] == '?' || s[i] == p[j]){
 						B[j+1] = A[j];
 					}
+                    
 				}
 			}
 			A = B;

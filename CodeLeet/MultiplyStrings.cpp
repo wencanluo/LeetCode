@@ -121,13 +121,26 @@ public:
         int n = num2.size();
         
         if(m==0 || n==0) return "0";
+        if(num1 == "0" || num2 == "0") return "0";
+        
         string R = "0";
         
         string z = "";
         
+        vector<string> M;
+        M.resize(10, "");
+        
         for(int i=n-1;i>=0;i--){//for each digit in num2
             //multiply it to num1
-            string s = multiply(num1, num2[i]);
+            string s;
+            char c = num2[i];
+            if(M[c-'0'] == ""){
+                s = multiply(num1, c);
+                M[c-'0'] = s;
+            }else{
+                s = M[c-'0'];
+            }
+            
             s += z;
             R = add(R, s);
             z += "0";

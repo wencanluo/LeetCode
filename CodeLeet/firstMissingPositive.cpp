@@ -22,39 +22,32 @@ public:
     int firstMissingPositive(int A[], int n) {//O(3n), Whenever there is an exchange, the number of correct order will increase at 1, therefore, the max number of exchange will be most n;
         // Start typing your C/C++ solution below
         // DO NOT write int main() function
-		if(n==0) return 1; //always check the boundary
+		if(n==0) return 1;
 
-		int k;
-		int i = 0;
-		while(i < n)
-		{
-			if(A[i] > 0 && A[i] <= n)//Check whether it is negative or out of range
-			{
-				if( A[i] != i+1 && A[A[i]-1] != A[i])//if they are the same, do NOT need to exchange
-				{
-					//change A[i] to A[A[i]-1]
-					int t = A[A[i]-1];
-					A[A[i]-1] = A[i];
-					A[i] = t;
-					continue;
-				}
+		int k = 0;
+
+		while(k<n){
+			while(A[k] != k+1 && (A[k] > 0 && A[k] <= n) && A[A[k]-1] != A[k] ){
+				//switch A[A[k]-1], A[k]
+				int t = A[A[k]-1];
+				A[A[k]-1] = A[k];
+				A[k] = t;
 			}
-			i++;
+
+			k++;
 		}
 
-		for(k=0;k<n;k++)
-		{
+		for(k=0;k<n;k++){
 			if(A[k] != k+1) break;
 		}
-
-        return k+1;
+		return k+1;
     }
 };
 
 void main()
 {
 	Solution s;
-	int A[] = {0};
+	int A[] = {4,1,2,2};
 	int d = s.firstMissingPositive(A, sizeof(A)/sizeof(A[0]));
 
 	cout << d << endl;

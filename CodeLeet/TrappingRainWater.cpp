@@ -59,63 +59,27 @@ public:
     	if(n==0) return 0;
 		int area = 0;
 
-		stack<int> S;
-		bool down = false;
+		vector<int> L;
+        vector<int> R;
+        L.resize(n,0);
+        R.resize(n,0);
 
-		for(int k=1;k<n;k++){//first n-1
-			if(A[k] < A[k-1]){
-				if(!down) down = true;
-			}else if(A[k] > A[k-1]){
-				if(down) down = false;
-			}
-			
-			if(down){
-				S.push(k-1);
-			}else{
-				int t = -1;
-				while(!S.empty() && A[S.top()] <= A[k]){
-					t = S.top();
-					S.pop();
-				}
-
-				if(S.empty() && t!=-1){
-					int sum = 0;
-					for(int i=t;i<=k;i++){
-						sum += A[i];
-					}
-					sum -= max(A[k], A[t]) - min(A[k], A[t]);
-					area += min(A[k], A[t])*(k-t+1) - sum;
-				}
-
-				if(!S.empty() && k==n-1){//last one
-					if(t == -1){
-						t = S.top();
-						while(!S.empty()) S.pop();
-					}
-
-					int sum = 0;
-					for(int i=t;i<=k;i++){
-						sum += A[i];
-					}
-					sum -= max(A[k], A[t]) - min(A[k], A[t]);
-
-					area += min(A[k], A[t])*(k-t+1) - sum;
-				}else if(!S.empty() && k < n-1 && A[k] > A[k+1]){//last one
-					if(t == -1){
-						t = S.top();
-						while(!S.empty()) S.pop();
-					}
-
-					int sum = 0;
-					for(int i=t;i<=k;i++){
-						sum += A[i];
-					}
-					sum -= max(A[k], A[t]) - min(A[k], A[t]);
-					area += min(A[k], A[t])*(k-t+1) - sum;
-				}
-			}
+        int m = 0;
+		for(int i=0;i<n;i++){
+            m = max(m, A[i]);
+            L[i] = m;
 		}
 
+        m = 0;
+        for(int i=n-1;i>=0;i--){
+            m = max(m, A[i]);
+            R[i] = m;
+    	}
+        
+        for(int i=0;i<n;i++){
+            area += max(min(L[i], R[i]) - A[i], 0);
+        }
+        
         return area;
     }
 };

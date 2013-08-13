@@ -48,17 +48,31 @@ struct Interval {
 
 class Solution {
 public:
-    char *strStr(char *haystack, char *needle) {
+    char *strStr(char *haystack, char *needle) {//O(mn)
         // Start typing your C/C++ solution below
         // DO NOT write int main() function
-        
+        int n = strlen(haystack);
+		int m = strlen(needle);
+		if(m==0) return haystack;
+		
+		for(int i=0;i<=n-m;i++){
+			bool found = true;
+			for(int j=0;j<m;j++){
+				if(haystack[i+j] != needle[j]){
+					found = false; 
+					break;
+				}
+			}
+			if(found) return (haystack + i);
+		}
+		return NULL;
     }
 };
 
 void main(){
     Solution s;
 
-	
+	cout << s.strStr("abcd","bc");
     
 	system("pause");
 }

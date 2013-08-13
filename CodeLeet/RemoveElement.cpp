@@ -1,7 +1,7 @@
-/*Implement strStr()Feb 18 '126159 / 19459
-Implement strStr().
+/*Remove Element Feb 16 '125574 / 11584
+Given an array and a value, remove all instances of that value in place and return the new length.
 
-Returns a pointer to the first occurrence of needle in haystack, or null if needle is not part of haystack.
+The order of elements can be changed. It doesn't matter what you leave beyond the new length.
 
 Author: Wencan Luo
 Language: C++
@@ -48,62 +48,44 @@ struct Interval {
 
 class Solution {
 public:
-    char *strStr(char *haystack, char *needle) {//O(mn)
+	int removeElement(int A[], int n, int elem) {
         // Start typing your C/C++ solution below
         // DO NOT write int main() function
-		if(NULL == haystack || needle == NULL) return NULL;
-        if(!*needle) return haystack;
-		if(!*haystack) return NULL;
+		if(n==0) return 0;
 
-		char* q = needle;
-		char* m = haystack;
-		while(*++q){
-			m++;
-			if(!*m) return NULL;
+		int begin = 0;
+		int end = n-1;
+		while(begin < end){
+			while(begin < n && A[begin] != elem) begin++;
+			while(end >= 0 && A[end] == elem) end--;
+			if(begin >= end) break;
+			int t=A[begin];
+			A[begin]= A[end];
+			A[end] = t;
 		}
 
-		char* p = haystack;
-		while(*m){
-			char* r = p;
-			char* q = needle;
-			while(*r!='\0' && *q != '\0'){
-    		 if(*r != *q) break;
-             r++;
-             q++;
-			}
-			if(*q=='\0') return p;
-
-			p++;
-			m++;
-		}
-		return NULL;
+		return begin-1;
     }
 
-    char *strStr_mn(char *haystack, char *needle) {//O(mn)
+    int removeElement2(int A[], int n, int elem) {
         // Start typing your C/C++ solution below
         // DO NOT write int main() function
-        int n = strlen(haystack);
-		int m = strlen(needle);
-		if(m==0) return haystack;
-		
-		for(int i=0;i<=n-m;i++){
-			bool found = true;
-			for(int j=0;j<m;j++){
-				if(haystack[i+j] != needle[j]){
-					found = false; 
-					break;
+        int k = 0;
+		for(int i=0;i<n;i++){
+			if(A[i] != elem){
+				if(k!=i){
+					A[k] = A[i];
 				}
+				k++;
 			}
-			if(found) return (haystack + i);
 		}
-		return NULL;
+
+		return k;
     }
 };
 
 void main(){
     Solution s;
-
-	cout << s.strStr("abcd","bc");
     
 	system("pause");
 }

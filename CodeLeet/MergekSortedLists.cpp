@@ -80,7 +80,7 @@ public:
 		return head;
     }
 
-    ListNode *mergeKLists(vector<ListNode *> &lists) {
+    ListNode *mergeKLists_Onk2(vector<ListNode *> &lists) {//O(n*k^2)
         // Start typing your C/C++ solution below
         // DO NOT write int main() function
 		int n = lists.size();
@@ -93,6 +93,23 @@ public:
 		}
 		return head;
     }
+
+	ListNode *mergeKLists(vector<ListNode *> &lists){//n*k*lgk
+		int n = lists.size();
+		if(n==0) return NULL;
+		if(n==1) return lists[0];
+
+		vector<ListNode *> left(lists.begin(), lists.begin() + n/2);
+		vector<ListNode *> right(lists.begin() + n/2, lists.end());
+
+		ListNode *L1 = mergeKLists(left);
+		ListNode *L2 = mergeKLists(right);
+
+		return mergeTwoLists(L1, L2);
+	}
 };
 
+void main()
+{
+}
 

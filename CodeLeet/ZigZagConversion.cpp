@@ -56,14 +56,16 @@ public:
     string convert(string s, int nRows) {
         // Start typing your C/C++ solution below
         // DO NOT write int main() function    
-        int n=s.size();
-		string r = "";
-		for(int i=0;i<nRows;i++){
-			for(int j=i;j<n;j+=2*(nRows-1)){
-				r += s[j];
-				if(i!=0 && i!=(nRows-1) && (j + 2*nRows-2*i-2 < n)){
-					r += s[j + 2*nRows-2*i-2];
-				}
+    	string r = s;
+		if(nRows == 1) return r;
+        int k = 0;
+        
+        for(int i=0;i<nRows;i++){
+			for(int j=i;j<s.size();j+=2*(nRows-1)){
+				r[k++] = s[j];
+                if(i==0 || i==nRows-1) continue;
+                if(j + 2*nRows-2*i-2 >= s.size()) continue;
+				r[k++] = s[j + 2*nRows-2*i-2];
 			}
 		}
 
@@ -74,7 +76,7 @@ public:
 void main(){
 	Solution s;
 
-	cout << s.convert("PAYPALISHIRING", 3) << endl;
+	cout << s.convert("A", 1) << endl;
 
 	system("pause");
 }

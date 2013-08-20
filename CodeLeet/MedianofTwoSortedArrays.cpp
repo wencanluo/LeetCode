@@ -42,39 +42,121 @@ public:
        if(begin >= end) return -1;
        if(begin +1 == end){
            if(A[begin] == V) return begin;
-           return -1;
+    	   if(A[begin] < V) return end;
+		   if(A[begin] > V) return begin;
+           return end;
        }
        
-       int mid = (begin+end)/2;
+       int mid = 0;
        while(begin < end){
+		   mid = (begin+end)/2;
            if(A[mid] == V) return mid;
            if(A[mid] < V){
-                
-           }
+               begin = mid+1;
+           }else{
+			   end = mid;
+		   }
        }
        
-       return -1;
+       return begin;
     }
-    
-    double findMedianSortedArraysRec(int A[], int begin, int end, int B[], int begin, int end) {
+	
+	int findSortedArraysK(int A[], int m, int B[], int n, int K) {
         // Start typing your C/C++ solution below
         // DO NOT write int main() function
-        
-        
+		if(m==0 && n==0) return 0;
+		if(m==0) return B[K];
+		if(n==0) return A[K];
+		if(m+n <= K) return 0;
+
+		int *pA = A;
+		int *pB = B;
+		if(A[0] > B[0]){
+			pA = B;
+			pB = A;
+			int t = m;
+			m = n;
+			n = t;
+		}
+
+		if(pA[m-1] <= pB[0]){
+			if(K >= m){
+				return pB[K-m];
+			}else{
+				return pA[K];
+			}
+		}
+
+		if(pA[0] > pB[n-1]){
+			if(K >= n){
+				return pA[K-n];
+			}else{
+				return pB[K];
+			}
+		}
+
+		int begin = 0;
+		int end = m;
+
+		int k = 0;
+		int mid = 0;
+		while(begin < end){
+			mid = (begin+end)/2;
+			k = binarySearch(pB, 0, n, pA[mid]);
+			if(k >= n){
+				if(mid + n <= K){
+					return pA[K-n];
+				}else{
+					end = mid;
+				}
+			}else if(k == 0){
+				if(mid >= K){
+					return pA[K];
+				}else{
+					begin = mid+1;
+				}
+			}else{
+				if(mid+k == K){
+					return min(pA[mid], pB[k]);
+				}else if(mid+k < K){
+					begin = mid+1;
+				}else{
+					end = mid;
+				}
+			}
+		}
+		
+		//not found in pA
+		mid = (begin+end)/2;
+		return pB[K-mid];
     }
-    
+
     double findMedianSortedArrays(int A[], int m, int B[], int n) {
         // Start typing your C/C++ solution below
         // DO NOT write int main() function
-        return findMedianSortedArraysRec(A, 0, m, B, 0, n, )
+		if((m+n)%2==0){
+			return findSortedArraysK(A, m, B, n, (m+n)/2)/2. + findSortedArraysK(A, m, B, n, (m+n)/2-1)/2.;
+		}else{
+			return findSortedArraysK(A, m, B, n, (m+n)/2);
+		}
+		
+		return 0;
     }
 };
 
 void main(){
     Solution s;
 
+	int a[] = {2};
+	int b[] = {1,3};
+	int m = sizeof(a)/sizeof(a[0]);
+	int n = sizeof(b)/sizeof(b[0]);
+    
+	cout<< s.findMedianSortedArrays(a, m, b, n) << endl;
+	for(int i=0;i<10;i++){
+		//cout<< s.findSortedArraysK(a, m, b, n, i) << endl;
+	}
+
 	system("pause");
 }
-
-
 

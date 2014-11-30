@@ -131,7 +131,7 @@ public:
 		return pB[K-mid];
     }
 
-    double findMedianSortedArrays(int A[], int m, int B[], int n) {
+    double findMedianSortedArrays_Ologmlogn(int A[], int m, int B[], int n) {
         // Start typing your C/C++ solution below
         // DO NOT write int main() function
 		if((m+n)%2==0){
@@ -140,6 +140,43 @@ public:
 			return findSortedArraysK(A, m, B, n, (m+n)/2);
 		}
 		
+		return 0;
+    }
+    
+    int findSortedArraysKRec(int A[], int aB, int aE, int B[], int bB, int bE, int K) {
+        if(aB == aE && bB == bE){
+            return 0;
+        }
+        
+        int aM = (aB + aE)/2;
+        int bM = (bB + bE)/2;
+
+        if(A[aM] == B[bM]){
+             if(aM+bM+1 == K){
+                return A[aM];
+            }else if(aM+bM+1 < K){
+                
+            }else{
+                
+            }
+        }else if(A[aM] > B[bM]){
+            
+        }else{
+            
+        }
+        
+        return 0;
+    }
+            
+    double findMedianSortedArrays(int A[], int m, int B[], int n) {
+        // Start typing your C/C++ solution below
+        // DO NOT write int main() function
+		if((m+n)%2==0){
+    		return findSortedArraysKRec(A, 0, m, B, 0, n, (m+n)/2)/2. + findSortedArraysKRec(A, 0, m, B, 0, n, (m+n)/2-1)/2.;
+		}else{
+			return findSortedArraysKRec(A, 0, m, B, 0, n, (m+n)/2);
+		}
+        
 		return 0;
     }
 };

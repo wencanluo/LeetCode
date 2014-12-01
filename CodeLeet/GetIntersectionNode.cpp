@@ -85,6 +85,8 @@ public:
         //i==j
         while(i>0){
             if(headA==headB) return headA;
+            headA=headA->next;
+            headB=headB->next;
             i--;
         }
         

@@ -58,7 +58,7 @@ public:
         }
     }
     
-    int maxProduct(int A[], int n) {
+    int maxProduct2(int A[], int n) {
         if(n==0) return -1;
         if(n==1) return A[0];
         
@@ -91,6 +91,32 @@ public:
           maxP = max(P, maxP);
         }else{
             maxP = max(maxP, maxProductNonZero(A, n, i, n-1));
+        }
+        
+        return maxP;
+    }
+    
+    int max3(int a, int b, int c){
+        return max(max(a,b),c);    
+    }
+    
+    int min3(int a, int b, int c){
+        return min(min(a,b),c);    
+    }
+    
+    int maxProduct(int A[], int n) {
+        if(n<=0) return -1;
+        
+        int f=A[0], g=A[0];
+        int maxP = f;
+        
+        for(int i=1;i<n;i++){
+            int f_old = f;
+            f=max3(f*A[i],A[i],g*A[i]);
+            g=min3(g*A[i],A[i],f_old*A[i]);
+            if(f>=maxP){
+                maxP = f;
+            }
         }
         
         return maxP;

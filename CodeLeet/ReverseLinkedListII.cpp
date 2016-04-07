@@ -119,7 +119,7 @@ public:
     }
 };
 
-void main(){
+int main(){
 	Solution s;
 	
 	ListNode *a = new ListNode(1);
@@ -135,12 +135,14 @@ void main(){
 	}
 	cout << endl;
 
-	p = s.reverseBetween(a, 2, 3);
+	p = s.reverse(a);
+	
+	//p = s.reverseBetween(a, 2, 3);
 	while(p){
 		cout << p->val << ",";
 		p = p->next;
 	}
 	cout << endl;
 	
-	system("pause");
+	return 0;
 }
